@@ -10,7 +10,7 @@ from pathlib import Path
 # Add the current directory so imports work smoothly
 sys.path.insert(0, str(Path(__file__).parent))
 
-from Algorithm_Problem_Solving_Assignment_01.main import (
+from main import (
     validate_ticket,
     select_open_tickets,
     select_follow_up,
