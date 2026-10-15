@@ -55,6 +55,14 @@ def test_validation_rules():
     ticket, err = validate_ticket(bad_status)
     assert ticket is None, "Invalid status must be rejected"
 
+    # Wrong-shaped categorical values should be reported, not raise TypeError.
+    for field, bad_value in (("status", []), ("category", {}), ("priority", [])):
+        malformed = valid.copy()
+        malformed[field] = bad_value
+        ticket, err = validate_ticket(malformed)
+        assert ticket is None, f"Malformed {field} must be rejected"
+        assert field in err, f"Expected {field} in error: {err}"
+
 
 def test_boundary_age_repair():
     """Test the Tuesday isolated boundary bug repair for 'at least 2 days old'.

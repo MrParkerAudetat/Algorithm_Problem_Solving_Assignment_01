@@ -37,11 +37,11 @@ def validate_ticket(ticket):
         problems.append("id must be non-empty text")
 
     # Rule 2: status must be either 'open' or 'closed'
-    if "status" not in ticket or ticket["status"] not in VALID_STATUSES:
+    if not isinstance(ticket.get("status"), str) or ticket["status"] not in VALID_STATUSES:
         problems.append(f"status must be one of {sorted(VALID_STATUSES)}")
 
     # Rule 3: category must be 'software', 'network', or 'access'
-    if "category" not in ticket or ticket["category"] not in VALID_CATEGORIES:
+    if not isinstance(ticket.get("category"), str) or ticket["category"] not in VALID_CATEGORIES:
         problems.append(f"category must be one of {sorted(VALID_CATEGORIES)}")
 
     # Rule 4: age_days must be an integer >= 0, explicitly excluding Python bools
@@ -54,7 +54,7 @@ def validate_ticket(ticket):
             problems.append("age_days must be an integer >= 0 (not boolean)")
 
     # Rule 5: priority must be 'low', 'normal', or 'high'
-    if "priority" not in ticket or ticket["priority"] not in VALID_PRIORITIES:
+    if not isinstance(ticket.get("priority"), str) or ticket["priority"] not in VALID_PRIORITIES:
         problems.append(f"priority must be one of {sorted(VALID_PRIORITIES)}")
 
     if problems:
